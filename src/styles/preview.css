@@ -1,0 +1,774 @@
+/* ============================================
+   preview.css — Preview Pane & Markdown Body
+   ============================================ */
+
+/* --- Preview Pane --- */
+.preview-pane {
+  background-color: var(--color-bg-preview);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Preview Pane Label/Tab (optional) --- */
+.preview-pane-header {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-preview);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+/* --- Scrollable Preview Content --- */
+.preview-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 32px 40px;
+  overscroll-behavior: contain;
+}
+
+/* ============================================
+   Markdown Body Overrides
+   (overrides github-markdown-css defaults)
+   ============================================ */
+
+/*
+ * github-markdown-css scopes [data-theme="dark"] and [data-theme="light"]
+ * INSIDE @media (prefers-color-scheme: dark/light) blocks. That means if the
+ * OS is in dark mode, the dark variables always win even when we set
+ * data-theme="light" on <html>. To override this we explicitly re-declare all
+ * github-markdown-css colour tokens here, scoped to our own [data-theme]
+ * selectors at the document root, which have higher specificity than the
+ * media-query-scoped rules in that library.
+ */
+
+/* ── Dark theme github-markdown tokens ──────────────────────────────────── */
+[data-theme="dark"] .markdown-body {
+  color-scheme: dark;
+  --fgColor-default: #f0f6fc;
+  --fgColor-muted: #9198a1;
+  --fgColor-accent: #4493f8;
+  --fgColor-attention: #d29922;
+  --fgColor-danger: #f85149;
+  --fgColor-success: #3fb950;
+  --fgColor-done: #ab7df8;
+  --bgColor-default: #0d1117;
+  --bgColor-muted: #151b23;
+  --bgColor-neutral-muted: #656c7633;
+  --bgColor-attention-muted: #bb800926;
+  --borderColor-default: #3d444d;
+  --borderColor-muted: #3d444db3;
+  --borderColor-neutral-muted: #3d444db3;
+  --borderColor-accent-emphasis: #1f6feb;
+  --borderColor-attention-emphasis: #9e6a03;
+  --borderColor-danger-emphasis: #da3633;
+  --borderColor-success-emphasis: #238636;
+  --borderColor-done-emphasis: #8957e5;
+  --color-prettylights-syntax-comment: #9198a1;
+  --color-prettylights-syntax-constant: #79c0ff;
+  --color-prettylights-syntax-entity: #d2a8ff;
+  --color-prettylights-syntax-storage-modifier-import: #f0f6fc;
+  --color-prettylights-syntax-entity-tag: #7ee787;
+  --color-prettylights-syntax-keyword: #ff7b72;
+  --color-prettylights-syntax-string: #a5d6ff;
+  --color-prettylights-syntax-variable: #ffa657;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+  --color-prettylights-syntax-brackethighlighter-angle: #9198a1;
+  --color-prettylights-syntax-invalid-illegal-bg: var(--bgColor-danger-muted, #67060c);
+  --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
+  --color-prettylights-syntax-carriage-return-bg: #b62324;
+  --color-prettylights-syntax-carriage-return-text: #f0f6fc;
+  --color-prettylights-syntax-markup-heading: #1f6feb;
+  --color-prettylights-syntax-string-regexp: #7ee787;
+  --color-prettylights-syntax-markup-list: #f2cc60;
+  --color-prettylights-syntax-markup-italic: #f0f6fc;
+  --color-prettylights-syntax-markup-bold: #f0f6fc;
+  --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
+  --color-prettylights-syntax-markup-deleted-bg: #67060c;
+  --color-prettylights-syntax-markup-inserted-text: #aff5b4;
+  --color-prettylights-syntax-markup-inserted-bg: #033a16;
+  --color-prettylights-syntax-markup-changed-text: #ffdfb6;
+  --color-prettylights-syntax-markup-changed-bg: #5a1e02;
+  --color-prettylights-syntax-markup-ignored-text: #f0f6fc;
+  --color-prettylights-syntax-markup-ignored-bg: #1158c7;
+  --color-prettylights-syntax-meta-diff-range: #d2a8ff;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #3d444d;
+}
+
+/* ── Light theme github-markdown tokens ─────────────────────────────────── */
+[data-theme="light"] .markdown-body {
+  color-scheme: light;
+  --fgColor-default: #1f2328;
+  --fgColor-muted: #656d76;
+  --fgColor-accent: #0969da;
+  --fgColor-attention: #9a6700;
+  --fgColor-danger: #d1242f;
+  --fgColor-success: #1a7f37;
+  --fgColor-done: #8250df;
+  --bgColor-default: #ffffff;
+  --bgColor-muted: #f6f8fa;
+  --bgColor-neutral-muted: #818b981f;
+  --bgColor-attention-muted: #fff8c5;
+  --borderColor-default: #d0d7de;
+  --borderColor-muted: #d0d7deb3;
+  --borderColor-neutral-muted: #d0d7deb3;
+  --borderColor-accent-emphasis: #0969da;
+  --borderColor-attention-emphasis: #9a6700;
+  --borderColor-danger-emphasis: #cf222e;
+  --borderColor-success-emphasis: #1a7f37;
+  --borderColor-done-emphasis: #8250df;
+  --color-prettylights-syntax-comment: #6e7781;
+  --color-prettylights-syntax-constant: #0550ae;
+  --color-prettylights-syntax-entity: #6639ba;
+  --color-prettylights-syntax-storage-modifier-import: #24292f;
+  --color-prettylights-syntax-entity-tag: #116329;
+  --color-prettylights-syntax-keyword: #cf222e;
+  --color-prettylights-syntax-string: #0a3069;
+  --color-prettylights-syntax-variable: #953800;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
+  --color-prettylights-syntax-brackethighlighter-angle: #57606a;
+  --color-prettylights-syntax-invalid-illegal-bg: #82071e;
+  --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
+  --color-prettylights-syntax-carriage-return-bg: #cf222e;
+  --color-prettylights-syntax-carriage-return-text: #f6f8fa;
+  --color-prettylights-syntax-markup-heading: #0550ae;
+  --color-prettylights-syntax-string-regexp: #116329;
+  --color-prettylights-syntax-markup-list: #3b2300;
+  --color-prettylights-syntax-markup-italic: #24292f;
+  --color-prettylights-syntax-markup-bold: #24292f;
+  --color-prettylights-syntax-markup-deleted-text: #82071e;
+  --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
+  --color-prettylights-syntax-markup-inserted-text: #116329;
+  --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
+  --color-prettylights-syntax-markup-changed-text: #3b2300;
+  --color-prettylights-syntax-markup-changed-bg: #fef3c0;
+  --color-prettylights-syntax-markup-ignored-text: #eaeef2;
+  --color-prettylights-syntax-markup-ignored-bg: #0550ae;
+  --color-prettylights-syntax-meta-diff-range: #8250df;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
+}
+
+.markdown-body {
+  --md-inline-code-bg: var(--color-btn-bg);
+  --md-pre-bg: var(--color-bg-sidebar);
+  --md-table-header-bg: var(--color-btn-bg);
+  --md-table-alt-bg: rgba(31, 111, 235, 0.08);
+  --md-table-hover-bg: rgba(88, 166, 255, 0.12);
+  --md-blockquote-bg: rgba(110, 118, 129, 0.12);
+  --md-blockquote-border: #58a6ff;
+  --md-mark-bg: rgba(187, 128, 9, 0.35);
+  --md-mark-text: var(--color-text-primary);
+  --md-detail-bg: rgba(110, 118, 129, 0.08);
+  --md-shadow-soft: 0 1px 2px rgba(1, 4, 9, 0.12);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background-color: transparent;
+  max-width: 860px;
+  margin: 0 auto;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+[data-theme="light"] .markdown-body {
+  --md-inline-code-bg: #eef2f6;
+  --md-pre-bg: #f6f8fa;
+  --md-table-header-bg: #f6f8fa;
+  --md-table-alt-bg: rgba(9, 105, 218, 0.05);
+  --md-table-hover-bg: rgba(9, 105, 218, 0.1);
+  --md-blockquote-bg: #f6f8fa;
+  --md-blockquote-border: #0969da;
+  --md-mark-bg: #fff8c5;
+  --md-mark-text: #24292f;
+  --md-detail-bg: #f6f8fa;
+  --md-shadow-soft: 0 1px 2px rgba(31, 35, 40, 0.08);
+}
+
+/* --- Headings --- */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  color: var(--color-text-primary);
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.markdown-body h3 { font-size: 1.25em; }
+.markdown-body h4 { font-size: 1em; }
+.markdown-body h5 { font-size: 0.875em; }
+.markdown-body h6 {
+  font-size: 0.85em;
+  color: var(--color-text-secondary);
+}
+
+/* --- Paragraphs & Text --- */
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.markdown-body em {
+  font-style: italic;
+}
+
+/* --- Links --- */
+.markdown-body a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+/* --- Lists --- */
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.75em;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ul,
+.markdown-body ol ol {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-body ul {
+  list-style-type: disc;
+}
+
+.markdown-body ol {
+  list-style-type: decimal;
+}
+
+.markdown-body li {
+  margin: 0.3em 0;
+}
+
+.markdown-body li + li {
+  margin-top: 0.25em;
+}
+
+.markdown-body li > p {
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+}
+
+.markdown-body li > ul,
+.markdown-body li > ol {
+  margin-bottom: 0;
+}
+
+/* --- Task Lists --- */
+.markdown-body .contains-task-list {
+  padding-left: 0;
+}
+
+.markdown-body .task-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65em;
+  list-style-type: none;
+  position: relative;
+  padding-left: 0;
+}
+
+.markdown-body .task-list-item + .task-list-item {
+  margin-top: 0.5em;
+}
+
+.markdown-body .task-list-item input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 1rem;
+  height: 1rem;
+  margin: 0.2em 0 0;
+  vertical-align: top;
+  accent-color: var(--color-accent);
+}
+
+.markdown-body .task-list-item > p,
+.markdown-body .task-list-item > ul,
+.markdown-body .task-list-item > ol {
+  margin-top: 0;
+}
+
+/* --- Inline Code --- */
+.markdown-body :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.18em 0.42em;
+  margin: 0;
+  background-color: var(--md-inline-code-bg);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  word-break: break-word;
+}
+
+/* --- Code Blocks --- */
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding: 16px 18px;
+  overflow: auto;
+  font-size: 0.875em;
+  line-height: 1.65;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
+  background-color: var(--md-pre-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--md-shadow-soft);
+  tab-size: 2;
+}
+
+.markdown-body pre:empty {
+  display: none;
+}
+
+.markdown-body pre code {
+  display: block;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  white-space: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+  font-size: 100%;
+  color: var(--color-text-primary);
+}
+
+.markdown-body pre code:empty {
+  display: none;
+}
+
+/* --- Highlight.js Overrides for Dark Theme --- */
+[data-theme="dark"] .markdown-body pre code .hljs-keyword,
+[data-theme="dark"] .markdown-body .hljs-keyword { color: #ff7b72; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-string,
+[data-theme="dark"] .markdown-body .hljs-string { color: #a5d6ff; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-comment,
+[data-theme="dark"] .markdown-body .hljs-comment { color: #8b949e; font-style: italic; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-number,
+[data-theme="dark"] .markdown-body .hljs-number { color: #79c0ff; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-function,
+[data-theme="dark"] .markdown-body .hljs-function { color: #d2a8ff; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-title,
+[data-theme="dark"] .markdown-body .hljs-title { color: #d2a8ff; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-built_in,
+[data-theme="dark"] .markdown-body .hljs-built_in { color: #ffa657; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-type,
+[data-theme="dark"] .markdown-body .hljs-type { color: #ffa657; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-attr,
+[data-theme="dark"] .markdown-body .hljs-attr { color: #79c0ff; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-variable,
+[data-theme="dark"] .markdown-body .hljs-variable { color: #ffa657; }
+
+[data-theme="dark"] .markdown-body pre code .hljs-meta,
+[data-theme="dark"] .markdown-body .hljs-meta { color: #79c0ff; }
+
+/* --- Highlight.js Overrides for Light Theme --- */
+[data-theme="light"] .markdown-body pre code .hljs-keyword,
+[data-theme="light"] .markdown-body .hljs-keyword { color: #cf222e; }
+
+[data-theme="light"] .markdown-body pre code .hljs-string,
+[data-theme="light"] .markdown-body .hljs-string { color: #0a3069; }
+
+[data-theme="light"] .markdown-body pre code .hljs-comment,
+[data-theme="light"] .markdown-body .hljs-comment { color: #6e7781; font-style: italic; }
+
+[data-theme="light"] .markdown-body pre code .hljs-number,
+[data-theme="light"] .markdown-body .hljs-number { color: #0550ae; }
+
+[data-theme="light"] .markdown-body pre code .hljs-function,
+[data-theme="light"] .markdown-body .hljs-function { color: #8250df; }
+
+[data-theme="light"] .markdown-body pre code .hljs-title,
+[data-theme="light"] .markdown-body .hljs-title { color: #8250df; }
+
+[data-theme="light"] .markdown-body pre code .hljs-built_in,
+[data-theme="light"] .markdown-body .hljs-built_in { color: #953800; }
+
+[data-theme="light"] .markdown-body pre code .hljs-type,
+[data-theme="light"] .markdown-body .hljs-type { color: #953800; }
+
+[data-theme="light"] .markdown-body pre code .hljs-attr,
+[data-theme="light"] .markdown-body .hljs-attr { color: #0550ae; }
+
+[data-theme="light"] .markdown-body pre code .hljs-variable,
+[data-theme="light"] .markdown-body .hljs-variable { color: #953800; }
+
+[data-theme="light"] .markdown-body pre code .hljs-meta,
+[data-theme="light"] .markdown-body .hljs-meta { color: #0550ae; }
+
+/* --- Blockquotes --- */
+.markdown-body blockquote {
+  margin: 0 0 16px 0;
+  padding: 0.9em 1.1em;
+  color: var(--color-text-secondary);
+  background-color: var(--md-blockquote-bg);
+  border-left: 4px solid var(--md-blockquote-border);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.markdown-body blockquote > :first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body blockquote blockquote {
+  margin-top: 1em;
+}
+
+/* --- Horizontal Rule --- */
+.markdown-body hr {
+  height: 1px;
+  margin: 24px 0;
+  padding: 0;
+  background-color: var(--color-border);
+  border: 0;
+}
+
+/* --- Tables --- */
+.markdown-body table {
+  display: table;
+  width: 100%;
+  min-width: max-content;
+  max-width: none;
+  border-spacing: 0;
+  border-collapse: separate;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-top: 0;
+  margin-bottom: 16px;
+  background-color: transparent;
+  box-shadow: var(--md-shadow-soft);
+  overflow: hidden;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 10px 14px;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+  text-align: left;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+  background-color: var(--md-table-header-bg);
+}
+
+.markdown-body table tr {
+  background-color: transparent;
+}
+
+.markdown-body table tr:nth-child(2n) td {
+  background-color: var(--md-table-alt-bg);
+}
+
+.markdown-body table tr:hover td {
+  background-color: var(--md-table-hover-bg);
+}
+
+.markdown-body table tr > :last-child {
+  border-right: 0;
+}
+
+.markdown-body table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+/* --- Images --- */
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  margin: 16px auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--md-shadow-soft);
+}
+
+/* --- Definition Lists --- */
+.markdown-body dl {
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+/* --- Footnotes --- */
+.markdown-body section.footnotes,
+.markdown-body .footnotes {
+  font-size: 0.875em;
+  color: var(--color-text-secondary);
+  border-top: 1px solid var(--color-border);
+  margin-top: 32px;
+  padding-top: 16px;
+}
+
+.markdown-body section.footnotes hr,
+.markdown-body .footnotes hr {
+  display: none;
+}
+
+.markdown-body a.footnote-ref,
+.markdown-body sup a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.markdown-body section.footnotes ol,
+.markdown-body .footnotes ol {
+  padding-left: 1.4em;
+}
+
+.markdown-body section.footnotes li,
+.markdown-body .footnotes li {
+  margin-bottom: 0.75em;
+}
+
+.markdown-body .footnote-backref {
+  margin-left: 0.45em;
+  white-space: nowrap;
+}
+
+/* --- Raw HTML Elements --- */
+.markdown-body details {
+  margin: 16px 0;
+  padding: 0.9em 1em;
+  background-color: var(--md-detail-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.markdown-body summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.markdown-body details[open] > summary {
+  margin-bottom: 0.75em;
+}
+
+.markdown-body mark {
+  padding: 0.08em 0.25em;
+  border-radius: 0.2em;
+  background-color: var(--md-mark-bg);
+  color: var(--md-mark-text);
+}
+
+.markdown-body sup,
+.markdown-body sub {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.markdown-body sup {
+  top: -0.45em;
+}
+
+.markdown-body sub {
+  bottom: -0.2em;
+}
+
+/* --- Keyboard Shortcut (kbd) --- */
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  line-height: 1;
+  color: var(--color-text-primary);
+  vertical-align: middle;
+  background-color: var(--color-btn-bg);
+  border: 1px solid var(--color-border);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 -1px 0 rgba(1, 4, 9, 0.18);
+}
+
+/* --- Empty Preview State --- */
+.preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 40px;
+}
+
+.preview-empty .empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.preview-empty .empty-text {
+  font-size: 15px;
+  max-width: 300px;
+  line-height: 1.6;
+}
+
+/* --- Print overrides for preview --- */
+@media print {
+  .preview-content {
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  .preview-pane-header {
+    display: none !important;
+  }
+
+  .markdown-body {
+    --md-inline-code-bg: #eef2f6;
+    --md-pre-bg: #f6f8fa;
+    --md-table-header-bg: #f6f8fa;
+    --md-table-alt-bg: #fbfcfd;
+    --md-table-hover-bg: #ffffff;
+    --md-blockquote-bg: #f6f8fa;
+    --md-blockquote-border: #d0d7de;
+    --md-mark-bg: #fff2a8;
+    --md-mark-text: #24292f;
+    --md-detail-bg: #f6f8fa;
+    --md-shadow-soft: none;
+    max-width: 100%;
+    font-size: 12pt;
+    color: #000;
+    background: #fff !important;
+  }
+
+  .markdown-body pre {
+    overflow: visible;
+    white-space: pre-wrap;
+    word-break: break-word;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px solid #d0d7de;
+    background-color: #f6f8fa !important;
+  }
+
+  .markdown-body pre code {
+    white-space: inherit;
+    word-break: break-word;
+  }
+
+  .markdown-body :not(pre) > code {
+    background-color: #eef2f6 !important;
+    color: #000 !important;
+  }
+
+  .markdown-body table {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: visible;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body table th,
+  .markdown-body table td {
+    border-color: #ccc !important;
+    word-break: break-word;
+  }
+
+  .markdown-body table th {
+    background-color: #f6f8fa !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .markdown-body table tr:nth-child(2n) td {
+    background-color: #fbfcfd !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .markdown-body img {
+    border: none;
+    box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body blockquote,
+  .markdown-body details,
+  .markdown-body table,
+  .markdown-body img,
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

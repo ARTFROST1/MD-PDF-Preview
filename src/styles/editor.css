@@ -1,0 +1,177 @@
+/* ============================================
+   editor.css — CodeMirror Overrides
+   ============================================ */
+
+/* --- Editor Pane Container --- */
+.editor-pane {
+  background-color: var(--color-bg-editor);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- CodeMirror Root --- */
+.editor-pane .cm-editor {
+  flex: 1;
+  height: 100%;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.editor-pane .cm-editor.cm-focused {
+  outline: none;
+}
+
+/* --- Editor Background --- */
+.editor-pane .cm-editor .cm-scroller {
+  overflow: auto;
+  font-family: var(--font-mono);
+}
+
+.editor-pane .cm-editor .cm-content {
+  padding: 16px 0;
+  caret-color: var(--color-accent);
+}
+
+/* --- Gutters --- */
+.editor-pane .cm-editor .cm-gutters {
+  background-color: var(--color-bg-editor);
+  border-right: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  min-width: 48px;
+}
+
+.editor-pane .cm-editor .cm-gutter.cm-lineNumbers .cm-gutterElement {
+  padding: 0 12px 0 8px;
+  min-width: 40px;
+  text-align: right;
+}
+
+.editor-pane .cm-editor .cm-activeLineGutter {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+}
+
+/* --- Active Line --- */
+.editor-pane .cm-editor .cm-activeLine {
+  background-color: var(--color-active-bg);
+}
+
+/* --- Cursor --- */
+.editor-pane .cm-editor .cm-cursor,
+.editor-pane .cm-editor .cm-dropCursor {
+  border-left-color: var(--color-accent);
+  border-left-width: 2px;
+}
+
+/* --- Selection --- */
+.editor-pane .cm-editor .cm-selectionBackground,
+.editor-pane .cm-editor.cm-focused .cm-selectionBackground,
+.editor-pane .cm-editor ::selection {
+  background-color: rgba(88, 166, 255, 0.2) !important;
+}
+
+[data-theme="light"] .editor-pane .cm-editor .cm-selectionBackground,
+[data-theme="light"] .editor-pane .cm-editor.cm-focused .cm-selectionBackground,
+[data-theme="light"] .editor-pane .cm-editor ::selection {
+  background-color: rgba(9, 105, 218, 0.15) !important;
+}
+
+/* --- Matching Brackets --- */
+.editor-pane .cm-editor .cm-matchingBracket {
+  background-color: rgba(88, 166, 255, 0.25);
+  color: var(--color-accent) !important;
+  outline: 1px solid var(--color-accent);
+  border-radius: 2px;
+}
+
+/* --- Search Match Highlight --- */
+.editor-pane .cm-editor .cm-searchMatch {
+  background-color: rgba(88, 166, 255, 0.2);
+  border-radius: 2px;
+}
+
+.editor-pane .cm-editor .cm-searchMatch.cm-searchMatch-selected {
+  background-color: rgba(88, 166, 255, 0.4);
+}
+
+/* --- Fold Placeholder --- */
+.editor-pane .cm-editor .cm-foldPlaceholder {
+  background-color: var(--color-btn-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  padding: 0 6px;
+  margin: 0 4px;
+}
+
+/* --- Tooltip / Autocomplete --- */
+.editor-pane .cm-editor .cm-tooltip {
+  background-color: var(--color-bg-sidebar);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  color: var(--color-text-primary);
+}
+
+.editor-pane .cm-editor .cm-tooltip-autocomplete > ul > li {
+  padding: 4px 8px;
+}
+
+.editor-pane .cm-editor .cm-tooltip-autocomplete > ul > li[aria-selected] {
+  background-color: var(--color-active-bg);
+  color: var(--color-accent);
+}
+
+/* --- Panels (search bar, etc.) --- */
+.editor-pane .cm-editor .cm-panels {
+  background-color: var(--color-bg-sidebar);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.editor-pane .cm-editor .cm-panels input,
+.editor-pane .cm-editor .cm-panels button {
+  color: var(--color-text-primary);
+}
+
+.editor-pane .cm-editor .cm-panels input {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+}
+
+.editor-pane .cm-editor .cm-panels input:focus {
+  border-color: var(--color-accent);
+  outline: none;
+}
+
+/* --- Editor Placeholder --- */
+.editor-pane .cm-editor .cm-placeholder {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* --- Editor Pane Label/Tab (optional) --- */
+.editor-pane-header {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-editor);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+/* --- Word Wrap Toggle Active --- */
+.editor-pane .cm-editor .cm-lineWrapping {
+  word-break: break-word;
+}

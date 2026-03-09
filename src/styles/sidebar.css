@@ -1,0 +1,193 @@
+/* ============================================
+   sidebar.css — Sidebar Styling
+   ============================================ */
+
+.sidebar {
+  background-color: var(--color-bg-sidebar);
+  border-right: 1px solid var(--color-border);
+  width: var(--sidebar-width);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+/* --- Sidebar Header --- */
+.sidebar-header {
+  padding: 16px;
+  flex-shrink: 0;
+}
+
+.btn-new-doc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 16px;
+  background-color: var(--color-accent);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.btn-new-doc:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-new-doc:active {
+  transform: scale(0.98);
+}
+
+.btn-new-doc svg,
+.btn-new-doc .icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* --- Documents Label --- */
+.sidebar-label {
+  padding: 12px 16px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+/* --- Document List --- */
+.doc-list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 8px 16px;
+}
+
+/* --- Document Item --- */
+.doc-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  margin-bottom: 2px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  position: relative;
+  border-left: 3px solid transparent;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.doc-item:hover {
+  background-color: var(--color-btn-bg);
+}
+
+.doc-item.active {
+  background-color: var(--color-active-bg);
+  border-left-color: var(--color-accent);
+}
+
+.doc-item.active:hover {
+  background-color: var(--color-active-bg);
+}
+
+/* --- Document Item Content --- */
+.doc-item-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.doc-item-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.doc-item.active .doc-item-title {
+  color: var(--color-accent);
+}
+
+.doc-item-time {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+/* --- Delete Button --- */
+.doc-item-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity var(--transition-fast),
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.doc-item:hover .doc-item-delete {
+  opacity: 1;
+}
+
+.doc-item-delete:hover {
+  color: var(--color-danger);
+  background-color: var(--color-btn-bg);
+}
+
+/* --- Empty State --- */
+.doc-list-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.doc-list-empty .empty-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.doc-list-empty .empty-text {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* --- Sidebar Footer (optional) --- */
+.sidebar-footer {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
