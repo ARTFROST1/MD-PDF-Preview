@@ -16,7 +16,7 @@ import {
   saveSettings,
 } from './storage';
 import { initTheme, toggleTheme, getCurrentTheme } from './theme';
-import { createEditor, setEditorContent, setEditorTheme, editorUndo, editorRedo } from './editor';
+import { createEditor, setEditorContent, setEditorTheme, editorUndo, editorRedo, attachImageHandlers } from './editor';
 import { updatePreview } from './preview';
 import { exportToPdf } from './pdf';
 import { initSidebar, refreshSidebar } from './sidebar';
@@ -58,7 +58,7 @@ function initApp(): void {
   // d. Get DOM elements
   const editorPane = document.getElementById('editor-pane')!;
   const previewContent = document.getElementById('preview-content')!;
-  const previewPane = document.getElementById('preview-pane') as HTMLElement;
+  const paneMain = document.getElementById('main')!;
 
   // e. Create editor with onChange callback
   const debouncedSave = debounce((doc: Document) => {
@@ -74,10 +74,15 @@ function initApp(): void {
     debouncedSave(activeDoc);
   });
 
+  // Attach image paste / drag-drop handlers to the editor pane
+  attachImageHandlers(editorPane, editorView);
+
   // f. Render initial preview
   updatePreview(previewContent, activeDoc.content);
 
   // g. Sync-scroll state & listeners
+  // The preview's actual scrollable element is .preview-content (overflow-y: auto),
+  // not #preview-pane which has overflow: hidden.
   let syncScrollEnabled = false;
   let isSyncing = false;
 
@@ -86,11 +91,11 @@ function initApp(): void {
     const scroller = editorPane.querySelector('.cm-scroller') as HTMLElement | null;
     if (!scroller) return;
     isSyncing = true;
-    const ratio = scroller.scrollHeight - scroller.clientHeight > 0
-      ? scroller.scrollTop / (scroller.scrollHeight - scroller.clientHeight)
-      : 0;
-    previewPane.scrollTop = ratio * (previewPane.scrollHeight - previewPane.clientHeight);
-    isSyncing = false;
+    const editorScrollable = scroller.scrollHeight - scroller.clientHeight;
+    const ratio = editorScrollable > 0 ? scroller.scrollTop / editorScrollable : 0;
+    const previewScrollable = previewContent.scrollHeight - previewContent.clientHeight;
+    previewContent.scrollTop = ratio * previewScrollable;
+    requestAnimationFrame(() => { isSyncing = false; });
   }
 
   function onPreviewScroll(): void {
@@ -98,18 +103,18 @@ function initApp(): void {
     const scroller = editorPane.querySelector('.cm-scroller') as HTMLElement | null;
     if (!scroller) return;
     isSyncing = true;
-    const ratio = previewPane.scrollHeight - previewPane.clientHeight > 0
-      ? previewPane.scrollTop / (previewPane.scrollHeight - previewPane.clientHeight)
-      : 0;
-    scroller.scrollTop = ratio * (scroller.scrollHeight - scroller.clientHeight);
-    isSyncing = false;
+    const previewScrollable = previewContent.scrollHeight - previewContent.clientHeight;
+    const ratio = previewScrollable > 0 ? previewContent.scrollTop / previewScrollable : 0;
+    const editorScrollable = scroller.scrollHeight - scroller.clientHeight;
+    scroller.scrollTop = ratio * editorScrollable;
+    requestAnimationFrame(() => { isSyncing = false; });
   }
 
-  // Attach listeners once after editor renders (`.cm-scroller` needs to exist)
+  // Attach scroll listeners once after editor renders (`.cm-scroller` needs to exist)
   setTimeout(() => {
     const scroller = editorPane.querySelector('.cm-scroller') as HTMLElement | null;
     if (scroller) scroller.addEventListener('scroll', onEditorScroll, { passive: true });
-    previewPane.addEventListener('scroll', onPreviewScroll, { passive: true });
+    previewContent.addEventListener('scroll', onPreviewScroll, { passive: true });
   }, 0);
 
   // h. Initialize header with callbacks
@@ -196,6 +201,36 @@ function initApp(): void {
     const app = document.getElementById('app')!;
     app.classList.toggle('sidebar-collapsed');
     sidebarToggleBtn.classList.toggle('active', app.classList.contains('sidebar-collapsed'));
+  });
+
+  // n. Pane divider drag-to-resize
+  const paneDivider = paneMain.querySelector('.pane-divider') as HTMLElement;
+  let isDragging = false;
+
+  paneDivider.addEventListener('mousedown', (e: MouseEvent) => {
+    e.preventDefault();
+    isDragging = true;
+    document.body.style.cursor = 'col-resize';
+    (document.body.style as any).userSelect = 'none';
+    paneDivider.classList.add('dragging');
+  });
+
+  document.addEventListener('mousemove', (e: MouseEvent) => {
+    if (!isDragging) return;
+    const rect = paneMain.getBoundingClientRect();
+    const dividerWidth = paneDivider.offsetWidth;
+    const totalWidth = rect.width - dividerWidth;
+    const leftPx = Math.min(Math.max(e.clientX - rect.left, 80), totalWidth - 80);
+    const rightPx = totalWidth - leftPx;
+    paneMain.style.gridTemplateColumns = `${leftPx}px ${dividerWidth}px ${rightPx}px`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    document.body.style.cursor = '';
+    (document.body.style as any).userSelect = '';
+    paneDivider.classList.remove('dragging');
   });
 
   // m. Global keyboard shortcuts for undo/redo (fallback when editor lacks focus)

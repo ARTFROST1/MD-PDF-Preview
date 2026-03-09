@@ -189,8 +189,20 @@ body {
   justify-content: center;
 }
 
-.pane-divider:hover {
+.pane-divider:hover,
+.pane-divider.dragging {
   background-color: var(--color-accent);
+}
+
+/* While dragging, freeze the transition and block text-selection in panes */
+body.dragging-divider {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+
+body.dragging-divider .editor-pane,
+body.dragging-divider .preview-pane {
+  pointer-events: none;
 }
 
 .pane-divider::after {

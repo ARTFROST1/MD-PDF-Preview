@@ -13,6 +13,7 @@ import { unified } from 'unified';
 import type { Options as SanitizeSchema } from 'rehype-sanitize';
 
 const sanitizeAttributes = defaultSchema.attributes ?? {};
+const sanitizeProtocols = defaultSchema.protocols ?? {};
 
 const sanitizeSchema: SanitizeSchema = {
   ...defaultSchema,
@@ -32,6 +33,8 @@ const sanitizeSchema: SanitizeSchema = {
       ['className', 'hljs', /^language-./, /^hljs-./],
     ],
     h2: [...(sanitizeAttributes.h2 ?? []), ['className', 'sr-only']],
+    // Allow full img attribute set including loading/decoding
+    img: ['alt', 'src', 'title', 'height', 'width', 'loading', 'decoding'],
     input: [
       ...(sanitizeAttributes.input ?? []),
       ['type', 'checkbox'],
@@ -49,6 +52,11 @@ const sanitizeSchema: SanitizeSchema = {
     ],
     span: [...(sanitizeAttributes.span ?? []), ['className', 'hljs', /^hljs-./]],
     ul: [...(sanitizeAttributes.ul ?? []), ['className', 'contains-task-list']],
+  },
+  // Extend allowed protocols for img src to include data URIs and blobs
+  protocols: {
+    ...sanitizeProtocols,
+    src: [...((sanitizeProtocols as Record<string, string[]>).src ?? ['http', 'https']), 'data', 'blob'],
   },
 };
 
@@ -104,4 +112,26 @@ export function renderMarkdown(markdown: string): string {
 export function updatePreview(container: HTMLElement, markdown: string): void {
   container.innerHTML = renderMarkdown(markdown);
   secureExternalLinks(container);
+
+  // For every rendered image: enable lazy loading and show a friendly
+  // placeholder if the image URL cannot be fetched (e.g. a local file path).
+  container.querySelectorAll<HTMLImageElement>('img').forEach((img) => {
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.addEventListener('error', () => {
+      if (img.dataset['errored']) return;
+      img.dataset['errored'] = '1';
+      const wrap = document.createElement('span');
+      wrap.className = 'img-broken';
+      wrap.title = img.src;
+      const icon = document.createElement('span');
+      icon.className = 'img-broken-icon';
+      icon.textContent = '🖼️';
+      const label = document.createElement('span');
+      label.className = 'img-broken-label';
+      label.textContent = img.alt ? `Image not found: ${img.alt}` : 'Image not found';
+      wrap.append(icon, label);
+      img.replaceWith(wrap);
+    });
+  });
 }

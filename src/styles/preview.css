@@ -538,6 +538,27 @@
   box-shadow: var(--md-shadow-soft);
 }
 
+/* --- Broken Image Placeholder --- */
+.img-broken {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  margin: 8px 0;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-btn-bg);
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+
+.img-broken-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
 /* --- Definition Lists --- */
 .markdown-body dl {
   padding: 0;
