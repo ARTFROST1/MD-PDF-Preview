@@ -22,6 +22,8 @@ export interface AppSettings {
   theme: Theme;
   /** ID of the last opened document, or null if none. */
   lastOpenedDocId: string | null;
+  /** Whether sync-scroll between editor and preview is enabled. */
+  syncScrollEnabled?: boolean;
 }
 
 /** Supported UI colour themes. */

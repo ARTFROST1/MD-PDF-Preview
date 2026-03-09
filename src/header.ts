@@ -1,6 +1,6 @@
 import type { Theme, HeaderCallbacks } from './types';
 
-export function initHeader(callbacks: HeaderCallbacks): void {
+export function initHeader(callbacks: HeaderCallbacks & { initialSyncScrollEnabled?: boolean }): void {
   const titleInput = document.getElementById('doc-title') as HTMLInputElement;
   const themeToggle = document.getElementById('theme-toggle') as HTMLButtonElement;
   const downloadBtn = document.getElementById('download-btn') as HTMLButtonElement;
@@ -33,7 +33,8 @@ export function initHeader(callbacks: HeaderCallbacks): void {
   const clearBtn = document.getElementById('clear-btn') as HTMLButtonElement;
   const syncScrollBtn = document.getElementById('sync-scroll-btn') as HTMLButtonElement;
 
-  let syncScrollEnabled = false;
+  let syncScrollEnabled = callbacks.initialSyncScrollEnabled ?? false;
+  syncScrollBtn.classList.toggle('active', syncScrollEnabled);
 
   clearBtn.addEventListener('click', () => {
     callbacks.onClearDocument();

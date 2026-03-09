@@ -77,13 +77,16 @@ function initApp(): void {
   // Attach image paste / drag-drop handlers to the editor pane
   attachImageHandlers(editorPane, editorView);
 
+  // Sync editor theme with whatever theme is saved (editor always defaults to dark internally)
+  setEditorTheme(editorView, getCurrentTheme());
+
   // f. Render initial preview
   updatePreview(previewContent, activeDoc.content);
 
   // g. Sync-scroll state & listeners
   // The preview's actual scrollable element is .preview-content (overflow-y: auto),
   // not #preview-pane which has overflow: hidden.
-  let syncScrollEnabled = false;
+  let syncScrollEnabled = settings.syncScrollEnabled ?? false;
   let isSyncing = false;
 
   function onEditorScroll(): void {
@@ -119,6 +122,7 @@ function initApp(): void {
 
   // h. Initialize header with callbacks
   initHeader({
+    initialSyncScrollEnabled: settings.syncScrollEnabled ?? false,
     onTitleChange: (title: string) => {
       activeDoc.title = title;
       saveDocument(activeDoc);
@@ -144,6 +148,7 @@ function initApp(): void {
     },
     onToggleSyncScroll: (enabled: boolean) => {
       syncScrollEnabled = enabled;
+      saveSettings({ syncScrollEnabled: enabled });
     },
   });
 

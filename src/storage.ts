@@ -72,7 +72,7 @@ export function createDocument(title?: string): Document {
 
 /** Return saved AppSettings, falling back to sensible defaults. */
 export function getSettings(): AppSettings {
-  const defaults: AppSettings = { theme: 'dark', lastOpenedDocId: null };
+  const defaults: AppSettings = { theme: 'dark', lastOpenedDocId: null, syncScrollEnabled: false };
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
     if (!raw) return defaults;
