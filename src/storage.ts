@@ -54,17 +54,79 @@ export function deleteDocument(id: string): void {
   writeDocuments(readDocuments().filter((d) => d.id !== id));
 }
 
+const WELCOME_CONTENT = `# Добро пожаловать в MD → PDF! 🎉
+
+Это редактор **Markdown** с живым предпросмотром и экспортом в PDF.  
+Просто пишите слева — результат появляется справа в реальном времени.
+
+---
+
+## Что умеет Markdown
+
+### Текстовое форматирование
+
+Текст можно делать **жирным**, _курсивным_ или _**сочетать оба стиля**_.  
+Можно зачеркнуть ~~устаревшее~~ и выделить \`встроенный код\` прямо в строке.
+
+### Списки
+
+**Задачи и пункты:**
+
+- Написать документ в Markdown
+- Нажать **Download PDF** в панели инструментов
+- Получить красиво оформленный PDF
+
+**Нумерованный список:**
+
+1. Выберите или создайте документ в боковой панели
+2. Напишите содержимое с Markdown-разметкой
+3. При необходимости включите синхронизацию скролла
+4. Экспортируйте в PDF одним кликом
+
+### Цитата
+
+> Markdown — это лёгкий язык разметки с простым синтаксисом.  
+> Его цель — позволить людям писать в простом текстовом формате,  
+> который легко конвертируется в HTML (и PDF).
+
+### Таблица
+
+| Функция            | Как сделать         |
+| ------------------ | :-----------------: |
+| Жирный текст       | \`**текст**\`         |
+| Курсив             | \`_текст_\`           |
+| Заголовок          | \`# Заголовок\`       |
+| Ссылка             | \`[текст](url)\`      |
+| Блок кода          | \`\`\`язык ... \`\`\`   |
+
+### Блок кода
+
+\`\`\`javascript
+// Пример кода с подсветкой синтаксиса
+function greet(name) {
+  return \`Привет, \${name}! Добро пожаловать.\`;
+}
+
+console.log(greet('Мир'));
+\`\`\`
+
+---
+
+*Удалите этот текст и начните свой документ — или сохраните как шпаргалку по Markdown!*
+`;
+
 /**
  * Create a brand-new document with a unique id.
  * @param title Optional title; defaults to "Untitled".
+ * @param withWelcome Pass false to create a truly blank document.
  * @returns The newly created Document (not yet persisted — call saveDocument if needed).
  */
-export function createDocument(title?: string): Document {
+export function createDocument(title?: string, withWelcome = true): Document {
   const now = Date.now();
   return {
     id: crypto.randomUUID(),
     title: title ?? 'Untitled',
-    content: '',
+    content: withWelcome ? WELCOME_CONTENT : '',
     createdAt: now,
     updatedAt: now,
   };

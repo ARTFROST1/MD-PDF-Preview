@@ -182,7 +182,7 @@ function initApp(): void {
         if (docs.length > 0) {
           activeDoc = docs[0]!;
         } else {
-          activeDoc = createDocument();
+          activeDoc = createDocument('Untitled', false);
           saveDocument(activeDoc);
         }
         setEditorContent(editorView, activeDoc.content);
